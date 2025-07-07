@@ -1,6 +1,7 @@
 package com.bagstore.model;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 public class Category {
     private int id;
@@ -11,6 +12,10 @@ public class Category {
     private String status;
     private Timestamp createdAt;
     private Timestamp updatedAt;
+
+    // Additional fields for display
+    private int productCount;
+    private List<Product> featuredProducts;
 
     public Category() {
     }
@@ -89,6 +94,22 @@ public class Category {
 
     public boolean isActive() {
         return "ACTIVE".equals(this.status);
+    }
+
+    public int getProductCount() {
+        return productCount;
+    }
+
+    public void setProductCount(int productCount) {
+        this.productCount = productCount;
+    }
+
+    public List<Product> getFeaturedProducts() {
+        return featuredProducts;
+    }
+
+    public void setFeaturedProducts(List<Product> featuredProducts) {
+        this.featuredProducts = featuredProducts;
     }
 
     @Override

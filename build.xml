@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="BagStore" default="war" basedir=".">
+    
+    <!-- Project Properties -->
+    <property name="project.name" value="BagStore"/>
+    <property name="project.version" value="1.0"/>
+    
+    <!-- Directory Structure -->
+    <property name="src.dir" value="src/main/java"/>
+    <property name="web.dir" value="src/main/webapp"/>
+    <property name="resources.dir" value="src/main/resources"/>
+    <property name="lib.dir" value="lib"/>
+    <property name="build.dir" value="build"/>
+    <property name="build.classes.dir" value="${build.dir}/classes"/>
+    <property name="build.web.dir" value="${build.dir}/web"/>
+    <property name="dist.dir" value="dist"/>
+    
+    <!-- WAR file name -->
+    <property name="war.name" value="${project.name}.war"/>
+    
+    <!-- Tomcat Properties (optional for deployment) -->
+    <property name="tomcat.home" value="C:/Program Files/Apache Software Foundation/Tomcat 10.1"/>
+    <property name="tomcat.webapps" value="${tomcat.home}/webapps"/>
+    
+    <!-- Classpath -->
+    <path id="compile.classpath">
+        <fileset dir="${lib.dir}">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+    
+    <!-- Initialize -->
+    <target name="init">
+        <echo message="Initializing ${project.name} build..."/>
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${build.classes.dir}"/>
+        <mkdir dir="${build.web.dir}"/>
+        <mkdir dir="${dist.dir}"/>
+        <mkdir dir="${lib.dir}"/>
+    </target>
+    
+    <!-- Clean -->
+    <target name="clean">
+        <echo message="Cleaning build directories..."/>
+        <delete dir="${build.dir}"/>
+        <delete dir="${dist.dir}"/>
+    </target>
+    
+    <!-- Compile Java sources -->
+    <target name="compile" depends="init">
+        <echo message="Compiling Java sources..."/>
+        <javac srcdir="${src.dir}" 
+               destdir="${build.classes.dir}" 
+               classpathref="compile.classpath"
+               includeantruntime="false"
+               encoding="UTF-8"
+               source="11"
+               target="11"
+               debug="true">
+        </javac>
+        
+        <!-- Copy resources -->
+        <copy todir="${build.classes.dir}">
+            <fileset dir="${resources.dir}">
+                <include name="**/*"/>
+            </fileset>
+        </copy>
+    </target>
+    
+    <!-- Prepare web directory -->
+    <target name="prepare-web" depends="compile">
+        <echo message="Preparing web directory..."/>
+        
+        <!-- Copy web content -->
+        <copy todir="${build.web.dir}">
+            <fileset dir="${web.dir}">
+                <include name="**/*"/>
+            </fileset>
+        </copy>
+        
+        <!-- Copy compiled classes -->
+        <copy todir="${build.web.dir}/WEB-INF/classes">
+            <fileset dir="${build.classes.dir}">
+                <include name="**/*"/>
+            </fileset>
+        </copy>
+        
+        <!-- Copy library JARs -->
+        <copy todir="${build.web.dir}/WEB-INF/lib">
+            <fileset dir="${lib.dir}">
+                <include name="*.jar"/>
+                <!-- Exclude servlet-api as it's provided by container -->
+                <exclude name="servlet-api*.jar"/>
+                <exclude name="jsp-api*.jar"/>
+            </fileset>
+        </copy>
+    </target>
+    
+    <!-- Create WAR file -->
+    <target name="war" depends="prepare-web">
+        <echo message="Creating WAR file..."/>
+        <war destfile="${dist.dir}/${war.name}" 
+             webxml="${build.web.dir}/WEB-INF/web.xml">
+            <fileset dir="${build.web.dir}">
+                <exclude name="WEB-INF/web.xml"/>
+            </fileset>
+        </war>
+        <echo message="WAR file created: ${dist.dir}/${war.name}"/>
+    </target>
+    
+    <!-- Deploy to Tomcat -->
+    <target name="deploy" depends="war">
+        <echo message="Deploying to Tomcat..."/>
+        <copy file="${dist.dir}/${war.name}" 
+              todir="${tomcat.webapps}" 
+              overwrite="true"/>
+        <echo message="Deployed to ${tomcat.webapps}/${war.name}"/>
+    </target>
+    
+    <!-- Undeploy from Tomcat -->
+    <target name="undeploy">
+        <echo message="Undeploying from Tomcat..."/>
+        <delete file="${tomcat.webapps}/${war.name}"/>
+        <delete dir="${tomcat.webapps}/${project.name}"/>
+        <echo message="Undeployed ${project.name}"/>
+    </target>
+    
+    <!-- Redeploy -->
+    <target name="redeploy" depends="undeploy,deploy">
+        <echo message="Redeployed ${project.name}"/>
+    </target>
+    
+    <!-- Run tests (placeholder) -->
+    <target name="test" depends="compile">
+        <echo message="Running tests..."/>
+        <!-- Add test execution here if needed -->
+    </target>
+    
+    <!-- Build all -->
+    <target name="all" depends="clean,compile,war">
+        <echo message="Build completed successfully!"/>
+    </target>
+    
+    <!-- Default target info -->
+    <target name="help">
+        <echo message="Available targets:"/>
+        <echo message="  clean      - Clean build directories"/>
+        <echo message="  compile    - Compile Java sources"/>
+        <echo message="  war        - Create WAR file"/>
+        <echo message="  deploy     - Deploy WAR to Tomcat"/>
+        <echo message="  undeploy   - Remove from Tomcat"/>
+        <echo message="  redeploy   - Undeploy and deploy again"/>
+        <echo message="  all        - Clean, compile and create WAR"/>
+        <echo message="  help       - Show this help"/>
+    </target>
+    
+</project>

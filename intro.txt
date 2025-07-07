@@ -1,0 +1,5 @@
+ant clean    # Xóa build directories
+ant compile  # Compile Java code
+ant war      # Tạo WAR file
+ant all      # Clean + compile + war
+ant deploy   # Deploy lên Tomcat

@@ -15,6 +15,9 @@ public class OrderItem {
     // Related objects
     private Product product;
 
+    // Additional fields for display
+    private String productName;
+
     public OrderItem() {
     }
 
@@ -95,6 +98,33 @@ public class OrderItem {
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    // Helper method to get subtotal (alias for total)
+    public BigDecimal getSubtotal() {
+        return total;
+    }
+
+    public void setColor(String color) {
+        // OrderItem doesn't typically store color, but for compatibility
+        // This could be stored in a separate field or ignored
+    }
+
+    public void setSize(String size) {
+        // OrderItem doesn't typically store size, but for compatibility
+        // This could be stored in a separate field or ignored
+    }
+
+    public void setSubtotal(BigDecimal subtotal) {
+        this.total = subtotal;
     }
 
     @Override

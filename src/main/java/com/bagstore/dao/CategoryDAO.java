@@ -83,16 +83,25 @@ public class CategoryDAO {
 
     public List<Category> getAllCategories() {
         List<Category> categories = new ArrayList<>();
-        String sql = "SELECT * FROM categories ORDER BY name ASC";
+        String sql = "SELECT * FROM categories ORDER BY name";
 
         try (Connection conn = DatabaseConnection.getConnection();
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
-                categories.add(mapResultSetToCategory(rs));
-            }
+                Category category = new Category();
+                category.setId(rs.getInt("id"));
+                category.setName(rs.getString("name"));
+                category.setDescription(rs.getString("description"));
+                category.setSlug(rs.getString("slug"));
+                category.setImageUrl(rs.getString("image_url"));
+                category.setStatus(rs.getString("status"));
+                category.setCreatedAt(rs.getTimestamp("created_at"));
+                category.setUpdatedAt(rs.getTimestamp("updated_at"));
 
+                categories.add(category);
+            }
         } catch (SQLException e) {
             System.err.println("Error getting all categories: " + e.getMessage());
             e.printStackTrace();
@@ -116,6 +125,35 @@ public class CategoryDAO {
             System.err.println("Error getting active categories: " + e.getMessage());
             e.printStackTrace();
         }
+        return categories;
+    }
+
+    public List<Category> getAllActiveCategories() {
+        List<Category> categories = new ArrayList<>();
+        String sql = "SELECT * FROM categories WHERE status = 'ACTIVE' ORDER BY name";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                Category category = new Category();
+                category.setId(rs.getInt("id"));
+                category.setName(rs.getString("name"));
+                category.setDescription(rs.getString("description"));
+                category.setSlug(rs.getString("slug"));
+                category.setImageUrl(rs.getString("image_url"));
+                category.setStatus(rs.getString("status"));
+                category.setCreatedAt(rs.getTimestamp("created_at"));
+                category.setUpdatedAt(rs.getTimestamp("updated_at"));
+
+                categories.add(category);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error getting active categories: " + e.getMessage());
+            e.printStackTrace();
+        }
+
         return categories;
     }
 

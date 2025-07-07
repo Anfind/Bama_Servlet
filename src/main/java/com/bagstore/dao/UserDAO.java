@@ -52,14 +52,59 @@ public class UserDAO {
 
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
-                    return mapResultSetToUser(rs);
+                    User user = new User();
+                    user.setId(rs.getInt("id"));
+                    user.setUsername(rs.getString("username"));
+                    user.setEmail(rs.getString("email"));
+                    user.setPassword(rs.getString("password"));
+                    user.setFullName(rs.getString("full_name"));
+                    user.setPhone(rs.getString("phone"));
+                    user.setAddress(rs.getString("address"));
+                    user.setRole(rs.getString("role"));
+                    user.setCreatedAt(rs.getTimestamp("created_at"));
+                    user.setUpdatedAt(rs.getTimestamp("updated_at"));
+
+                    return user;
                 }
             }
-
         } catch (SQLException e) {
             System.err.println("Error getting user by ID: " + e.getMessage());
             e.printStackTrace();
         }
+        return null;
+    }
+
+    // Alias method for findById
+    public User findById(int id) {
+        String sql = "SELECT * FROM users WHERE id = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, id);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    User user = new User();
+                    user.setId(rs.getInt("id"));
+                    user.setUsername(rs.getString("username"));
+                    user.setEmail(rs.getString("email"));
+                    user.setPassword(rs.getString("password"));
+                    user.setFullName(rs.getString("full_name"));
+                    user.setPhone(rs.getString("phone"));
+                    user.setAddress(rs.getString("address"));
+                    user.setRole(rs.getString("role"));
+                    user.setCreatedAt(rs.getTimestamp("created_at"));
+                    user.setUpdatedAt(rs.getTimestamp("updated_at"));
+
+                    return user;
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error finding user by ID: " + e.getMessage());
+            e.printStackTrace();
+        }
+
         return null;
     }
 
@@ -152,6 +197,54 @@ public class UserDAO {
         return false;
     }
 
+    public boolean update(User user) {
+        String sql = "UPDATE users SET username = ?, email = ?, full_name = ?, phone = ?, address = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, user.getUsername());
+            pstmt.setString(2, user.getEmail());
+            pstmt.setString(3, user.getFullName());
+            pstmt.setString(4, user.getPhone());
+            pstmt.setString(5, user.getAddress());
+            pstmt.setInt(6, user.getId());
+
+            return pstmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("Error updating user: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public boolean verifyPassword(String email, String password) {
+        User user = findByEmail(email);
+        if (user != null) {
+            return com.bagstore.util.PasswordUtil.checkPassword(password, user.getPassword());
+        }
+        return false;
+    }
+
+    public boolean updateUserStatus(int userId, String status) {
+        String sql = "UPDATE users SET role = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, status);
+            pstmt.setInt(2, userId);
+
+            return pstmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("Error updating user status: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
         String sql = "SELECT * FROM users ORDER BY created_at DESC";
@@ -208,5 +301,38 @@ public class UserDAO {
         user.setCreatedAt(rs.getTimestamp("created_at"));
         user.setUpdatedAt(rs.getTimestamp("updated_at"));
         return user;
+    }
+
+    public User findByEmail(String email) {
+        String sql = "SELECT * FROM users WHERE email = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, email);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    User user = new User();
+                    user.setId(rs.getInt("id"));
+                    user.setUsername(rs.getString("username"));
+                    user.setEmail(rs.getString("email"));
+                    user.setPassword(rs.getString("password"));
+                    user.setFullName(rs.getString("full_name"));
+                    user.setPhone(rs.getString("phone"));
+                    user.setAddress(rs.getString("address"));
+                    user.setRole(rs.getString("role"));
+                    user.setCreatedAt(rs.getTimestamp("created_at"));
+                    user.setUpdatedAt(rs.getTimestamp("updated_at"));
+
+                    return user;
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error finding user by email: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }

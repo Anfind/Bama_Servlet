@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200">
+  <rect width="300" height="200" fill="#f3f4f6"/>
+  <rect x="75" y="40" width="150" height="100" fill="#1f2937" rx="10"/>
+  <rect x="85" y="50" width="130" height="15" fill="#f59e0b" rx="2"/>
+  <rect x="85" y="70" width="130" height="60" fill="#374151" rx="5"/>
+  <circle cx="190" cy="100" r="8" fill="#f59e0b"/>
+  <text x="150" y="170" text-anchor="middle" fill="#1f2937" font-family="Arial" font-size="14">Balo Học Sinh</text>
+</svg>

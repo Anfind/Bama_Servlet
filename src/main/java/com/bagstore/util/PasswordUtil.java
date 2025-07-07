@@ -50,6 +50,17 @@ public class PasswordUtil {
     }
 
     /**
+     * Alias for verifyPassword method
+     * 
+     * @param plainPassword  The plain text password
+     * @param hashedPassword The hashed password
+     * @return true if password matches, false otherwise
+     */
+    public static boolean checkPassword(String plainPassword, String hashedPassword) {
+        return verifyPassword(plainPassword, hashedPassword);
+    }
+
+    /**
      * Generate a random password
      * 
      * @param length The length of the password

@@ -21,6 +21,10 @@ public class Product {
     private Category category;
     private List<ProductImage> images;
 
+    // Additional fields for display
+    private String mainImageUrl;
+    private String categoryName;
+
     public Product() {
     }
 
@@ -140,6 +144,22 @@ public class Product {
         this.images = images;
     }
 
+    public String getMainImageUrl() {
+        return mainImageUrl;
+    }
+
+    public void setMainImageUrl(String mainImageUrl) {
+        this.mainImageUrl = mainImageUrl;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
     // Helper methods
     public boolean hasDiscount() {
         return discountPrice != null && discountPrice.compareTo(BigDecimal.ZERO) > 0;
@@ -171,6 +191,14 @@ public class Product {
                     .orElse(images.get(0).getImageUrl());
         }
         return "assets/images/products/no-image.jpg";
+    }
+
+    // Helper method to get final price (with discount)
+    public BigDecimal getFinalPrice() {
+        if (discountPrice != null && discountPrice.compareTo(BigDecimal.ZERO) > 0) {
+            return discountPrice;
+        }
+        return price;
     }
 
     @Override

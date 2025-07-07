@@ -124,12 +124,12 @@ INSERT INTO products (name, description, price, discount_price, category_id, sto
 
 -- Insert product images
 INSERT INTO product_images (product_id, image_url, is_primary, alt_text) VALUES 
-(1, 'assets/images/products/mf101-1.jpg', TRUE, 'Balo BAMA MF101 màu đen'),
-(1, 'assets/images/products/mf101-2.jpg', FALSE, 'Balo BAMA MF101 chi tiết'),
-(2, 'assets/images/products/nb102-1.jpg', TRUE, 'Balo BAMA NB102 màu xám'),
-(3, 'assets/images/products/stardust-1.jpg', TRUE, 'Túi BAMA Stardust Mini'),
-(4, 'assets/images/products/crossbag-1.jpg', TRUE, 'Túi đeo chéo MF301'),
-(5, 'assets/images/products/keychain-1.jpg', TRUE, 'Móc khóa BAMA');
+(1, 'images/products/mf101-1.jpg', TRUE, 'Balo BAMA MF101 màu đen'),
+(1, 'images/products/mf101-2.jpg', FALSE, 'Balo BAMA MF101 chi tiết'),
+(2, 'images/products/nb102-1.jpg', TRUE, 'Balo BAMA NB102 màu xám'),
+(3, 'images/products/stardust-1.jpg', TRUE, 'Túi BAMA Stardust Mini'),
+(4, 'images/products/crossbag-1.jpg', TRUE, 'Túi đeo chéo MF301'),
+(5, 'images/products/keychain-1.jpg', TRUE, 'Móc khóa BAMA');
 
 -- Create indexes for better performance
 CREATE INDEX idx_products_category ON products(category_id);

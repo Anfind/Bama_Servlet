@@ -14,6 +14,9 @@ public class User {
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
+    // Additional fields
+    private String gender;
+
     public User() {
     }
 
@@ -104,6 +107,14 @@ public class User {
 
     public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public boolean isAdmin() {

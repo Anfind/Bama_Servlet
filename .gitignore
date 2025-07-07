@@ -17,6 +17,10 @@
 # Virtual machine crash logs
 hs_err_pid*
 
+# Ant build directories
+build/
+dist/
+
 # Maven
 target/
 pom.xml.tag
