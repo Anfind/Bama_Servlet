@@ -1,0 +1,12 @@
+<!-- Default placeholder for missing product images -->
+<svg width="400" height="400" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="#e5e7eb"/>
+  <text x="50%" y="45%" text-anchor="middle" dy=".3em" font-family="Arial, sans-serif" font-size="14" fill="#6b7280">
+    No Image Available
+  </text>
+  <text x="50%" y="55%" text-anchor="middle" dy=".3em" font-family="Arial, sans-serif" font-size="12" fill="#9ca3af">
+    400x400px
+  </text>
+  <rect x="150" y="120" width="100" height="100" fill="none" stroke="#9ca3af" stroke-width="2" stroke-dasharray="5,5"/>
+  <text x="200" y="175" text-anchor="middle" dy=".3em" font-family="Arial, sans-serif" font-size="24" fill="#9ca3af">📦</text>
+</svg>

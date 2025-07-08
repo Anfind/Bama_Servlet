@@ -1,12 +1,11 @@
 # Compiled class files
 *.class
-*.md
 
 # Log files
 *.log
 
-# Package Files
-*.jar
+# Package Files - Keep lib/ for dependencies
+# *.jar
 *.war
 *.nar
 *.ear
@@ -21,17 +20,7 @@ hs_err_pid*
 build/
 dist/
 
-# Maven
-target/
-pom.xml.tag
-pom.xml.releaseBackup
-pom.xml.versionsBackup
-pom.xml.next
-release.properties
-dependency-reduced-pom.xml
-buildNumber.properties
-.mvn/timing.properties
-.mvn/wrapper/maven-wrapper.jar
+# Maven-related entries removed - Project now uses Ant only
 
 # NetBeans
 **/nbproject/private/

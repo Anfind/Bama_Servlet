@@ -245,7 +245,8 @@ public class ProductDAO {
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     Product product = mapResultSetToProduct(rs);
-                    product.setImages(getProductImages(product.getId()));
+                    // For list views, don't load images to avoid performance issues
+                    // Images will be loaded only for detail view
                     products.add(product);
                 }
             }

@@ -99,37 +99,61 @@ CREATE TABLE order_items (
     FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
 );
 
--- Insert sample data
+-- ============================================================================
+-- SAMPLE DATA - Dữ liệu mẫu hoàn chỉnh
+-- ============================================================================
 
--- Insert admin user (password: admin123)
-INSERT INTO users (username, email, password, full_name, role) VALUES 
-('admin', 'admin@bagstore.com', '$2a$10$N9qo8uLOickgx2ZMRZoMye1VQlYIZYV7XhLjNlKgQKdN1HjGNbp.S', 'Administrator', 'ADMIN'),
-('user1', 'user1@test.com', '$2a$10$N9qo8uLOickgx2ZMRZoMye1VQlYIZYV7XhLjNlKgQKdN1HjGNbp.S', 'Nguyen Van A', 'USER');
+-- Tạo categories mẫu
+INSERT INTO categories (name, description, slug, image_url, status, created_at, updated_at) VALUES
+('Balo công sở', 'Balo phù hợp cho công sở và làm việc', 'balo-cong-so', '/BagStore/images/categories/balo-cong-so.svg', 'ACTIVE', NOW(), NOW()),
+('Balo học sinh', 'Balo dành cho học sinh, sinh viên', 'balo-hoc-sinh', '/BagStore/images/categories/balo-hoc-sinh.svg', 'ACTIVE', NOW(), NOW()),
+('Túi xách nữ', 'Túi xách thời trang cho nữ', 'tui-xach-nu', '/BagStore/images/categories/tui-xach-nu.svg', 'ACTIVE', NOW(), NOW()),
+('Túi đeo chéo', 'Túi đeo chéo tiện lợi', 'tui-deo-cheo', '/BagStore/images/categories/tui-deo-cheo.svg', 'ACTIVE', NOW(), NOW()),
+('Phụ kiện', 'Các phụ kiện đi kèm', 'phu-kien', '/BagStore/images/categories/phu-kien.svg', 'ACTIVE', NOW(), NOW());
 
--- Insert categories
-INSERT INTO categories (name, description, slug) VALUES 
-('Balo Học Sinh', 'Balo dành cho học sinh, sinh viên', 'balo-hoc-sinh'),
-('Balo Công Sở', 'Balo dành cho công việc văn phòng', 'balo-cong-so'),
-('Túi Xách Nữ', 'Túi xách thời trang cho nữ', 'tui-xach-nu'),
-('Túi Đeo Chéo', 'Túi đeo chéo tiện lợi', 'tui-deo-cheo'),
-('Phụ Kiện', 'Các phụ kiện balo, túi xách', 'phu-kien');
+-- Tạo products mẫu
+INSERT INTO products (name, description, price, discount_price, category_id, stock_quantity, status, slug, created_at, updated_at) VALUES
+-- Balo công sở
+('Balo Laptop Dell Professional', 'Balo laptop cao cấp phù hợp cho công sở', 850000, 750000, 1, 50, 'ACTIVE', 'balo-laptop-dell-professional', NOW(), NOW()),
+('Balo Công Sở Samsonite Pro', 'Balo công sở chuyên nghiệp với nhiều ngăn tiện lợi', 1200000, 0, 1, 30, 'ACTIVE', 'balo-cong-so-samsonite-pro', NOW(), NOW()),
+('Balo Thông Minh Xiaomi', 'Balo thông minh với cổng USB tích hợp', 650000, 550000, 1, 40, 'ACTIVE', 'balo-thong-minh-xiaomi', NOW(), NOW()),
 
--- Insert sample products
-INSERT INTO products (name, description, price, discount_price, category_id, stock_quantity, slug) VALUES 
-('Balo BAMA Mesh Fabric Backpack MF101', 'Balo học sinh với chất liệu lưới thoáng khí, thiết kế hiện đại', 450000, 399000, 1, 50, 'balo-bama-mesh-fabric-mf101'),
-('Balo BAMA New Basic Backpack NB102', 'Balo basic với thiết kế đơn giản, phù hợp đi học đi làm', 380000, 0, 2, 30, 'balo-bama-new-basic-nb102'),
-('Túi BAMA STARDUST Mini Bag', 'Túi mini thời trang với họa tiết stardust độc đáo', 320000, 280000, 3, 25, 'tui-bama-stardust-mini'),
-('Mesh Fabric Cross Bag MF301', 'Túi đeo chéo mesh fabric tiện lợi', 250000, 0, 4, 40, 'mesh-fabric-cross-bag-mf301'),
-('BAMA Keychain', 'Móc khóa BAMA cao cấp', 50000, 35000, 5, 100, 'bama-keychain');
+-- Balo học sinh
+('Balo Học Sinh Stardust', 'Balo học sinh màu sắc trẻ trung', 320000, 280000, 2, 100, 'ACTIVE', 'balo-hoc-sinh-stardust', NOW(), NOW()),
+('Balo Nữ Sinh Đáng Yêu', 'Balo dành cho nữ sinh với thiết kế dễ thương', 280000, 0, 2, 80, 'ACTIVE', 'balo-nu-sinh-dang-yeu', NOW(), NOW()),
+('Balo Thể Thao Nike', 'Balo thể thao năng động cho học sinh', 450000, 400000, 2, 60, 'ACTIVE', 'balo-the-thao-nike', NOW(), NOW()),
 
--- Insert product images
-INSERT INTO product_images (product_id, image_url, is_primary, alt_text) VALUES 
-(1, 'images/products/mf101-1.jpg', TRUE, 'Balo BAMA MF101 màu đen'),
-(1, 'images/products/mf101-2.jpg', FALSE, 'Balo BAMA MF101 chi tiết'),
-(2, 'images/products/nb102-1.jpg', TRUE, 'Balo BAMA NB102 màu xám'),
-(3, 'images/products/stardust-1.jpg', TRUE, 'Túi BAMA Stardust Mini'),
-(4, 'images/products/crossbag-1.jpg', TRUE, 'Túi đeo chéo MF301'),
-(5, 'images/products/keychain-1.jpg', TRUE, 'Móc khóa BAMA');
+-- Túi xách nữ
+('Túi Xách Nữ Cao Cấp MF101', 'Túi xách nữ thiết kế sang trọng', 890000, 750000, 3, 25, 'ACTIVE', 'tui-xach-nu-cao-cap-mf101', NOW(), NOW()),
+('Túi Xách Công Sở Nữ', 'Túi xách phù hợp cho công sở và dạo phố', 650000, 0, 3, 35, 'ACTIVE', 'tui-xach-cong-so-nu', NOW(), NOW()),
+('Túi Xách Da Thật Premium', 'Túi xách da thật cao cấp', 1500000, 1350000, 3, 15, 'ACTIVE', 'tui-xach-da-that-premium', NOW(), NOW()),
+
+-- Túi đeo chéo
+('Túi Đeo Chéo Nam Crossbag', 'Túi đeo chéo tiện lợi cho nam', 320000, 280000, 4, 70, 'ACTIVE', 'tui-deo-cheo-nam-crossbag', NOW(), NOW()),
+('Túi Đeo Chéo Nữ Mini', 'Túi đeo chéo nhỏ gọn cho nữ', 250000, 0, 4, 90, 'ACTIVE', 'tui-deo-cheo-nu-mini', NOW(), NOW()),
+('Túi Đeo Chéo Thể Thao', 'Túi đeo chéo dành cho hoạt động thể thao', 180000, 150000, 4, 120, 'ACTIVE', 'tui-deo-cheo-the-thao', NOW(), NOW()),
+
+-- Phụ kiện
+('Móc Khóa Da Cao Cấp', 'Móc khóa da thật thiết kế đẹp', 85000, 65000, 5, 200, 'ACTIVE', 'moc-khoa-da-cao-cap', NOW(), NOW()),
+('Ví Da Nam Slim', 'Ví da nam mỏng gọn tiện lợi', 220000, 0, 5, 150, 'ACTIVE', 'vi-da-nam-slim', NOW(), NOW()),
+('Thắt Lưng Da Thật', 'Thắt lưng da thật cao cấp', 350000, 300000, 5, 80, 'ACTIVE', 'that-lung-da-that', NOW(), NOW());
+
+-- Thêm ảnh balo cho tất cả sản phẩm (sử dụng ảnh balo của bạn)
+INSERT INTO product_images (product_id, image_url, is_primary, alt_text, created_at)
+SELECT 
+    id,
+    '/BagStore/images/products/balo.png',
+    1,
+    CONCAT(name, ' - Ảnh chính'),
+    NOW()
+FROM products 
+WHERE status = 'ACTIVE';
+
+-- Tạo user admin và user thường (password: admin123 cho tất cả)
+INSERT INTO users (username, email, password, full_name, phone, address, role, created_at, updated_at) VALUES
+('admin', 'admin@bagstore.com', '$2a$12$LQv3c1yqBwlVHdaQfnUTKOXlMhKWKCTXJCgIL5RyM1Y7ZY5qxZQkS', 'Administrator', '0705777760', 'TP.HCM', 'ADMIN', NOW(), NOW()),
+('user1', 'user1@bagstore.com', '$2a$12$LQv3c1yqBwlVHdaQfnUTKOXlMhKWKCTXJCgIL5RyM1Y7ZY5qxZQkS', 'Nguyễn Văn A', '0901234567', 'Quận 1, TP.HCM', 'USER', NOW(), NOW()),
+('user2', 'user2@bagstore.com', '$2a$12$LQv3c1yqBwlVHdaQfnUTKOXlMhKWKCTXJCgIL5RyM1Y7ZY5qxZQkS', 'Trần Thị B', '0902345678', 'Quận 3, TP.HCM', 'USER', NOW(), NOW());
 
 -- Create indexes for better performance
 CREATE INDEX idx_products_category ON products(category_id);
@@ -137,3 +161,53 @@ CREATE INDEX idx_products_status ON products(status);
 CREATE INDEX idx_orders_user ON orders(user_id);
 CREATE INDEX idx_orders_status ON orders(status);
 CREATE INDEX idx_cart_user ON cart_items(user_id);
+
+-- ============================================================================
+-- KIỂM TRA KẾT QUẢ
+-- ============================================================================
+
+-- Kiểm tra số lượng dữ liệu đã tạo
+SELECT 'Categories Created' as Info, COUNT(*) as Count FROM categories;
+SELECT 'Products Created' as Info, COUNT(*) as Count FROM products;
+SELECT 'Product Images Created' as Info, COUNT(*) as Count FROM product_images;
+SELECT 'Users Created' as Info, COUNT(*) as Count FROM users;
+
+-- Hiển thị danh sách sản phẩm với ảnh
+SELECT 
+    p.id,
+    p.name,
+    p.price,
+    p.discount_price,
+    c.name as category_name,
+    pi.image_url,
+    p.status
+FROM products p
+LEFT JOIN categories c ON p.category_id = c.id
+LEFT JOIN product_images pi ON p.id = pi.product_id AND pi.is_primary = 1
+ORDER BY p.id;
+
+-- ============================================================================
+-- THÔNG TIN TÁI KHOẢN ĐĂNG NHẬP
+-- ============================================================================
+
+-- ADMIN ACCOUNT:
+-- Username: admin
+-- Email: admin@bagstore.com  
+-- Password: admin123
+
+-- USER ACCOUNTS:
+-- Username: user1 | Email: user1@bagstore.com | Password: admin123
+-- Username: user2 | Email: user2@bagstore.com | Password: admin123
+
+-- ============================================================================
+-- HOÀN TẤT THIẾT LẬP
+-- ============================================================================
+
+-- Database setup completed successfully!
+-- Tất cả sản phẩm sẽ hiển thị với ảnh balo.png
+-- Bạn có thể thay đổi ảnh sau bằng cách copy file ảnh vào:
+-- src/main/webapp/images/products/balo.png
+-- hoặc
+-- webapps/BagStore/images/products/balo.png
+
+COMMIT;
